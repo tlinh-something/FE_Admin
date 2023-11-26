@@ -39,7 +39,7 @@ export default function CoursePage() {
 
   const [rowsPerPage, setRowsPerPage] = useState(5);
 
-  const [storeID,setStoreID] = useState(0);
+  const [storeID, setStoreID] = useState(0);
   const handleSort = (event, id) => {
     const isAsc = orderBy === id && order === 'asc';
     if (id !== '') {
@@ -47,7 +47,7 @@ export default function CoursePage() {
       setOrderBy(id);
     }
   };
-console.log(storeID);
+  console.log(storeID);
   const handleSelectAllClick = (event) => {
     if (event.target.checked) {
       const newSelecteds = users.map((n) => n.name);
@@ -57,7 +57,6 @@ console.log(storeID);
     setSelected([]);
   };
 
-  
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
   };
@@ -74,24 +73,21 @@ console.log(storeID);
 
   const handleClick = (event, id) => {
     axios.delete(`http://167.172.92.40:8080/api/instructor/${id}`);
-    
-   
   };
-  
-  const [ins,setIns]=useState([]);
-  const fetchIns=()=>{
-    axios.get('http://167.172.92.40:8080/api/courses').then(res=>{
+
+  const [ins, setIns] = useState([]);
+  const fetchIns = () => {
+    axios.get('http://167.172.92.40:8080/api/allCourses').then((res) => {
       setIns(res.data);
-    })
-    
-  }
-  useEffect(()=>{
+    });
+  };
+  useEffect(() => {
     fetchIns();
     handleClick();
-  },[]);
+  }, []);
   const dataFiltered = applyFilter({
     inputData: ins,
-    
+
     comparator: getComparator(order, orderBy),
     filterName,
   });
@@ -101,8 +97,6 @@ console.log(storeID);
     <Container>
       <Stack direction="row" alignItems="center" justifyContent="space-between" mb={5}>
         <Typography variant="h4">Courses</Typography>
-
-       
       </Stack>
 
       <Card>
@@ -121,18 +115,17 @@ console.log(storeID);
                 rowCount={users.length}
                 numSelected={selected.length}
                 onRequestSort={handleSort}
-              
                 headLabel={[
-                  { id: 'avatar', label:'Image'},
-                  
-                  { id: 'name', label: 'Course Name' },                  // { id: 'role', label: 'Role' },
+                  { id: 'avatar', label: 'Image' },
+
+                  { id: 'name', label: 'Course Name' }, // { id: 'role', label: 'Role' },
                   // { id: 'isVerified', label: 'Verified', align: 'center' },
-                  { id: "upload_date", label:'Upload Date'},
+                  { id: 'upload_date', label: 'Upload Date' },
                   { id: 'description', label: 'Description' },
-                  { id: 'price', label: 'Price'},
+                  { id: 'price', label: 'Price' },
 
                   { id: 'status', label: 'Status' },
-                  { id: '' },
+                  { id: 'action', label: 'Action' },
                 ]}
               />
               <TableBody>
@@ -140,7 +133,7 @@ console.log(storeID);
                   .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                   .map((row) => (
                     <CourseTableRow
-                    id={row.instructorID}
+                      id={row.courseID}
                       key={row.id}
                       avatar={row.avatar}
                       name={row.name}
@@ -148,13 +141,12 @@ console.log(storeID);
                       description={row.description}
                       price={row.price}
                       status={row.status}
-                    
-                      
-                      handleClick={(event) => {
-                        handleClick(event, row.id);
-                        
-                      }
-                    }
+                      courseStatus={row.courseStatus}
+                      action={row.id}
+                      fetch={fetchIns}
+                      // handleClick={(event) => {
+                      //   handleClick(event, row.id);
+                      // }}
                     />
                   ))}
 
