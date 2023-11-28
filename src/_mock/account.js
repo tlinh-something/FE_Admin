@@ -2,6 +2,6 @@
 
 export const account = {
   displayName: 'ADMIN',
-  email: 'admin@gmail.com',
+  email: 'duylase171618@fpt.edu.vn',
   photoURL: '',
 };

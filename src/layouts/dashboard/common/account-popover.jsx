@@ -13,20 +13,7 @@ import { account } from 'src/_mock/account';
 
 // ----------------------------------------------------------------------
 
-const MENU_OPTIONS = [
-  {
-    label: 'Home',
-    link: '/ ',
-  },
-  {
-    label: 'Profile',
-    icon: 'eva:person-fill',
-  },
-  {
-    label: 'Settings',
-    icon: 'eva:settings-2-fill',
-  },
-];
+const MENU_OPTIONS = [];
 
 // ----------------------------------------------------------------------
 
@@ -38,7 +25,8 @@ export default function AccountPopover() {
   };
 
   const handleClose = () => {
-   setOpen(null);
+    window.location.href = 'http://167.172.92.40/login/v2?clearLocalStorage=true';
+    localStorage.clear();
   };
 
   return (
@@ -56,7 +44,8 @@ export default function AccountPopover() {
         }}
       >
         <Avatar
-          src={account.photoURL}e
+          src={account.photoURL}
+          e
           alt={account.displayName}
           sx={{
             width: 36,
